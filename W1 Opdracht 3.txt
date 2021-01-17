@@ -1,0 +1,120 @@
+//Week 1 Opdracht 3
+//Opdracht A
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+        while (true)
+        {
+//state is de waarde van de knop
+            boolean state = BoeBot.digitalRead(12);
+//als knop niet is ingedrukt, led is uit
+            if (state){
+                BoeBot.digitalWrite(1, false);
+                System.out.println("Niet Ingedrukt");
+//anders, led is aan
+            }else{
+                BoeBot.digitalWrite(1, true);
+                System.out.println("Ingedrukt");
+            }
+            BoeBot.wait(10);
+        }
+    }
+}
+
+//Opdracht B
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+//timer definieren
+        Timer t1 = new Timer(1000);
+//boolean met startwaarde true aanmaken
+        boolean statusLed = true;
+//t1 aanzetten
+        t1.mark();
+
+        while (true)
+        {
+//als knop niet is ingedrukt, led uit
+            boolean state = BoeBot.digitalRead(12);
+            if (state)
+            {
+                BoeBot.digitalWrite(1, false);
+                System.out.println("Niet Ingedrukt");
+            }
+//anders (knop ingedrukt) 
+//led krijgt de laatste waarde (aan of uit) en krijgt nieuwe waarde omgekeerd (aan = uit/ uit = aan)
+//met een vertragin van 1sec.
+            else
+            {
+                if (t1.timeout()) {
+                    BoeBot.digitalWrite(1, statusLed);
+                    statusLed = !statusLed;
+                }
+                System.out.println("Ingedrukt");
+            }
+            BoeBot.wait(10);
+        }
+    }
+
+
+//Opdracht C
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+//boolean met startwaarde true aanmaken
+        boolean statusLed = true;
+//timers definieren
+        Timer t1on = new Timer(1300);
+        Timer t1off = new Timer(700);
+//t1 aanzetten
+        t1on.mark();
+
+        while (true)
+        {
+//als knop niet is ingedrukt, led1 uit, led 3 aan
+            boolean state = BoeBot.digitalRead(12);
+            if (state) {
+                BoeBot.digitalWrite(1, false);
+                BoeBot.digitalWrite(3, true);
+                System.out.println("Niet Ingedrukt");
+            }
+            
+//anders als knop is ingedrukt, zet led 3 uit
+            else {
+                BoeBot.digitalWrite(3, false);
+ //als t1on voorbij is, haal de laatste status van led 1 op (aan of uit)              
+                if (t1on.timeout()) {
+                    boolean status = BoeBot.digitalRead(1);
+//als laatste status aan was, zet led 1 uit en start t1off
+                    if (status) {
+                        BoeBot.digitalWrite(1, false);
+                        t1off.mark();
+                    }
+                }
+ //als t1off voorbij is, haal de laatste status van led 1 op (aan of uit)   
+                if (t1off.timeout()) {
+                    boolean status = BoeBot.digitalRead(1);
+//als laatste status uit was, zet led 1 aan en start t1on
+                    if (!status) {
+                        BoeBot.digitalWrite(1, true);
+                        t1on.mark();
+                    }
+                }
+                System.out.println("Ingedrukt");
+            }
+            BoeBot.wait(10);
+        }
+    }
+}

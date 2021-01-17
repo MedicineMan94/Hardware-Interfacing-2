@@ -1,0 +1,196 @@
+//Week 1, Opdracht 2
+
+//Opdracht A:
+import TI.BoeBot;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+        {
+		//boolean aanmaken
+            boolean statusLed = false;
+
+		//loop
+            while (true) {
+		//zet led 1 & 3 op laatste status (aan/uit) en draai deze om (aan = uit/ uit = aan)
+                BoeBot.digitalWrite(1, statusLed);
+                BoeBot.digitalWrite(3, statusLed);
+                statusLed = !statusLed;
+
+		//vertraging
+                BoeBot.wait(1000);
+            }
+        }
+    }
+}
+
+//Opdracht B:
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+        {
+		//timer definieren
+            Timer t1 = new Timer(1000);
+            Timer t2 = new Timer(1000);
+		//booleans aanmaken
+            boolean statusLed1 = false;
+            boolean statusLed3 = false;
+		//start timer aangeven
+            t1.mark();
+            t2.mark();
+		//loop
+            while (true) {
+		//als t1 uit is, zet led 1 op laatste status (aan/uit) en draai deze om (aan = uit/ uit = aan)
+                if (t1.timeout()) {
+                    BoeBot.digitalWrite(1, statusLed1);
+                    statusLed1 = !statusLed1;
+                }
+		//als t2 uit is, zet led 3 op laatste status (aan/uit) en draai deze om (aan = uit/ uit = aan)
+                if (t2.timeout()) {
+                    BoeBot.digitalWrite(3, statusLed3);
+                    statusLed3 = !statusLed3;
+                }
+		//vertraging
+                BoeBot.wait(1);
+            }
+        }
+    }
+}
+
+//Opdracht C:
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+        {
+		//timer definieren
+            Timer t1 = new Timer(1000);
+            Timer t2 = new Timer(500);
+		//booleans aanmaken
+            boolean statusLed1 = false;
+            boolean statusLed3 = false;
+		//start timer aangeven
+            t1.mark();
+            t2.mark();
+		//loop
+            while (true) {
+		//als t1 uit is, zet led 1 op laatste status (aan/uit) en draai deze om (aan = uit/ uit = aan)
+                if (t1.timeout()) {
+                    BoeBot.digitalWrite(1, statusLed1);
+                    statusLed1 = !statusLed1;
+                }
+		//als t2 uit is, zet led 3 op laatste status (aan/uit) en draai deze om (aan = uit/ uit = aan)
+                if (t2.timeout()) {
+                    BoeBot.digitalWrite(3, statusLed3);
+                    statusLed3 = !statusLed3;
+                }
+		//vertraging
+                BoeBot.wait(1);
+            }
+        }
+    }
+}
+
+//Opdracht D:
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+        {
+		//timer definieren
+            Timer t1 = new Timer(1300);
+            Timer t2 = new Timer(700);
+		//booleans aanmaken
+            boolean statusLed1 = false;
+            boolean statusLed3 = false;
+		//start timer aangeven
+            t1.mark();
+            t2.mark();
+		//loop
+            while (true) {
+		//als t1 uit is, zet led 1 op laatste status (aan/uit) en draai deze om (aan = uit/ uit = aan)
+                if (t1.timeout()) {
+                    BoeBot.digitalWrite(1, statusLed1);
+                    statusLed1 = !statusLed1;
+                }
+		//als t2 uit is, zet led 3 op laatste status (aan/uit) en draai deze om (aan = uit/ uit = aan)
+                if (t2.timeout()) {
+                    BoeBot.digitalWrite(3, statusLed3);
+                    statusLed3 = !statusLed3;
+                }
+		//vertraging
+                BoeBot.wait(1);
+            }
+        }
+    }
+}
+
+//Opdracht E:
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+//timers definieren
+        Timer t1on = new Timer(1300);
+        Timer t1off = new Timer(700);
+        Timer t2on = new Timer(800);
+        Timer t2off = new Timer(1700);
+//start timers aangeven
+        t1on.mark();
+        t2on.mark();
+
+        while (true) {
+//als t1on voorbij is, haal op op led 1 aan of uit is
+            if (t1on.timeout()) {
+                boolean status = BoeBot.digitalRead(1);
+//als led 1 aan is, zet deze uit en start t1off               
+                if (status) {
+                    BoeBot.digitalWrite(1, false);
+                    t1off.mark();
+                }
+            }
+//als t1off voorbij is, haal op op led 1 aan of uit is
+            if (t1off.timeout()) {
+                boolean status = BoeBot.digitalRead(1);
+//als led 1 uit is, zet deze aan en start t1on
+                if (!status) {
+                    BoeBot.digitalWrite(1, true);
+                    t1on.mark();
+                }
+            }
+//als t2on voorbij is, haal op op led 3 aan of uit is
+            if (t2on.timeout()) {
+                boolean status = BoeBot.digitalRead(3);
+//als led 3 aan is, zet deze uit en start t2off                   
+                if (status) {
+                    BoeBot.digitalWrite(3, false);
+                    t2off.mark();
+                }
+            }
+//als t2off voorbij is, haal op op led 3 aan of uit is
+            if (t2off.timeout()) {
+                boolean status = BoeBot.digitalRead(3);
+//als led 3 uit is, zet deze aan en start t2on                
+                if (!status) {
+                    BoeBot.digitalWrite(3,true);
+                    t2on.mark();
+                }
+            }
+//vertraging
+            BoeBot.wait(1);
+        }
+    }
+}

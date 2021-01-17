@@ -1,0 +1,77 @@
+//Week 1, Opdracht 1
+//Opdracht A:
+
+import TI.BoeBot;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        {
+            while (true) {
+                BoeBot.digitalWrite(1, true);        //LED aanzetten
+                BoeBot.wait(1000);                   //Vertraging instellen
+                BoeBot.digitalWrite(1, false);       //LED aanzetten
+                BoeBot.wait(1000);                   //Vertraging instellen
+            }
+        }
+    }
+}
+
+//Opdracht B:
+
+import TI.BoeBot;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        {
+            while (true) {
+                BoeBot.digitalWrite(1, true);        //LED aanzetten
+                BoeBot.wait(1000);                   //Vertraging instellen
+                BoeBot.digitalWrite(1, false);       //LED aanzetten
+                BoeBot.wait(2000);                   //Vertraging instellen
+            }
+        }
+    }
+}
+
+//Opdracht C:
+
+import TI.BoeBot;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        {
+            while (true) {
+                BoeBot.digitalWrite(1, true);        //LED aanzetten
+                BoeBot.wait(100);                    //Vertraging instellen
+                BoeBot.digitalWrite(1, false);       //LED aanzetten
+                BoeBot.wait(100);                    //Vertraging instellen
+            }
+        }
+    }
+}
+
+//Opdracht D:
+
+import TI.BoeBot;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        {
+            while (true) {
+                BoeBot.digitalWrite(1, true);        //LED aanzetten
+                BoeBot.wait(10);                     //Vertraging instellen
+                BoeBot.digitalWrite(1, false);       //LED aanzetten
+                BoeBot.wait(10);                     //Vertraging instellen
+            }
+        }
+    }
+}
+

@@ -1,0 +1,80 @@
+//Week 1, Opdracht 4
+//Alle opdrachten kunnen samengevoegd worden
+//Opdracht A + B + C
+
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+//timers definieren
+        Timer t1 = new Timer(1000);
+        Timer t2 = new Timer(700);
+        Timer t1on = new Timer(1300);
+        Timer t1off = new Timer(700);
+//booleans aanmaken met startwaardes true
+        boolean statusLed1 = true;
+        boolean statusLed3 = true;
+//t1 en t2 starten
+        t1.mark();
+        t2.mark();
+
+        while (true)
+        {
+//haal waardes op van de knoppen
+            boolean state1 = BoeBot.digitalRead(12);
+            boolean state2 = BoeBot.digitalRead(11);
+als knop op pin 12 aan staat
+            if (state1)
+            {
+//als t1on voorbij is, haal status op van led 1 (aan of uit)
+                if (t1on.timeout()) {
+                    boolean status = BoeBot.digitalRead(1);
+//als status aan is, zet deze dan uit en start t1off
+                    if (status) {
+                        BoeBot.digitalWrite(1, false);
+                        t1off.mark();
+                    }
+                }
+//als t1off voorbij is, haal status op van led 1 (aan of uit)
+                if (t1off.timeout()) {
+                    boolean status = BoeBot.digitalRead(1);
+//als status uit is, zet deze dan aan en start t1on
+                    if (!status) {
+                        BoeBot.digitalWrite(1, true);
+                        t1on.mark();
+                    }
+                }
+                System.out.println("Ingedrukt");
+            }
+//anders als t1 voorbij is, haal status op van led 1 (aan of uit) en draai deze om (aan = uit of uit = aan)
+            else {
+                if (t1.timeout()) {
+                    BoeBot.digitalWrite(1, statusLed1);
+                    statusLed1 = !statusLed1;
+                }
+                System.out.println("btn 1 Ingedrukt");
+            }
+
+//als knop op pin 11 aan staat
+            if (state2)
+//zet led 3 uit
+            {
+                BoeBot.digitalWrite(3, false);
+                System.out.println("btn 2 Niet Ingedrukt");
+            }
+//anders zet led 1 uit
+            else {
+                BoeBot.digitalWrite(1, false);
+//als t2 voorbij is, haal status op van led 3 (aan of uit) en draai deze om (aan = uit of uit = aan)
+                if (t2.timeout()) {
+                    BoeBot.digitalWrite(3, statusLed3);
+                    statusLed3 = !statusLed3;
+                }
+                System.out.println("btn 2 Ingedrukt");
+            }
+            BoeBot.wait(10);
+        }
+    }
+}
