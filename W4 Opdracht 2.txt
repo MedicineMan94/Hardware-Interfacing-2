@@ -1,0 +1,59 @@
+import TI.BoeBot;
+import TI.PinMode;
+import TI.Servo;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+        System.out.println("Spoorzoeken");
+//variablen maken die het gemakkelijker maken on de sensoren in te programmeren
+        int links = 2;
+        int midden = 1;
+        int rechts = 0;
+
+        Servo s1 = new Servo(12);               //Servo1 declareren
+        Servo s2 = new Servo (13);              // servo 2 declareren
+
+//stilstand definieren
+        int stilstand = 1500;
+//rijsnelheid
+        int snelheid = 25;
+
+//minimale waarde die de senor moet meten zodra die zwart ziet
+        int minSensorWaarde = 50;
+
+        while (true) {
+//waarde van de sensoren meten, vertraging van 100ms
+            int analogeWaardeL = BoeBot.analogRead(links);
+            int analogeWaardeM = BoeBot.analogRead(midden);
+            int analogeWaardeR = BoeBot.analogRead(rechts);
+            BoeBot.wait(100);
+
+
+//als de middensensor zwart zien 
+            if (analogeWaardeM > minSensorWaarde) {
+//als de linker en rechtersensors wit zijn, rij dan rechtdoor
+                if (analogeWaardeL < minSensorWaarde && analogeWaardeR < minSensorWaarde){
+                    s1.update(stilstand + snelheid);                        //draaisnelheid declareren
+                    s2.update(stilstand - snelheid);                        //draaisnelheid declareren
+            }
+//als de rechtersensor zwart ziet, stuur dan naar rechts
+                else if (analogeWaardeR > minSensorWaarde){
+                    s1.update(stilstand);                        //draaisnelheid declareren
+                    s2.update(stilstand);
+                    s1.update(stilstand + snelheid);                        //draaisnelheid declareren
+                    s2.update(stilstand);
+                }
+//als de linkersensor zwart ziet, stuur dan naar links
+                else if (analogeWaardeL > minSensorWaarde){
+                    s1.update(stilstand);                        //draaisnelheid declareren
+                    s2.update(stilstand);
+                    s1.update(stilstand);                        //draaisnelheid declareren
+                    s2.update(stilstand - snelheid);
+                }
+            }
+
+            BoeBot.wait(50);
+        }
+    }
+}
