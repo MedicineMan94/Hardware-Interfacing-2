@@ -1,0 +1,76 @@
+//Week 3, Opdracht 1
+
+import TI.BoeBot;
+import TI.PinMode;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+
+        while (true) {
+//meet afstandsbediening waarde
+            int PulseLength = BoeBot.pulseIn(14, false, 6000);
+//als waarde hoger is dan 2000, zet waarde op naar binair en spreek vervolgens setNummer methode aan
+            if (PulseLength > 2000)
+            {
+                setNummer(setBinair());
+//print de waarde uit die via de afstandsbediening is doorgegeven
+                System.out.println(setNummer(setBinair()));
+            }
+            BoeBot.wait(10);
+        }
+    }
+
+
+    public static String setBinair() {
+        StringBuffer sb = new StringBuffer();
+        String binair;
+        int lengtes[] = new int[12];
+//als de waarde niet lager is dan 0, geef dan -1 terug
+        if (BoeBot.pulseIn(14, false, 20000) < 0) {
+            return "-1";
+        }
+//anders zet elke ingevelezen waarde om naar binair
+        else {
+            for (int i = 0; i < 12; i++)
+                if (BoeBot.pulseIn(14, false, 20000) > 1000) {
+                    lengtes[i] = 1;
+                } else {
+                    lengtes[i] = 0;
+                }
+//zet alle binaire waardes achter elkaar om een 'binair'string te krijgen
+            for (int i = 0; i < 12; i++)
+                sb.append(lengtes[i]);
+                binair = sb.toString();
+//geef de meetwaarde terug als binaire code
+            return binair;
+        }
+    }
+
+//geef de waarde terug waarvan de binaire code overeen komt
+    public static String setNummer(String binair) {
+        switch (binair) {
+            case "000000010000":
+                return "1";
+            case "100000010000":
+                return "2";
+            case "010000010000":
+                return "3";
+            case "110000010000":
+                return "4";
+            case "001000010000":
+                return "5";
+            case "101000010000":
+                return "6";
+            case "011000010000":
+                return "7";
+            case "111000010000":
+                return "8";
+            case "000100010000":
+                return "9";
+        }
+//als een binaire waarde niet gelijk is aan een hierboven, geef dan -1 terug
+        return "-1";
+    }
+}

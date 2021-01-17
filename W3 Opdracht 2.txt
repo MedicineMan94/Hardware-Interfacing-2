@@ -1,0 +1,158 @@
+import TI.BoeBot;
+import TI.PinMode;
+import TI.Servo;
+
+public class RobotMain {
+
+    static Servo s1 = new Servo(12);
+    static Servo s2 = new Servo(13);
+
+    public static void main(String[] args) {
+
+        while (true) {
+//meet afstandsbediening waarde
+            int PulseLength = BoeBot.pulseIn(14, false, 6000);
+//als waarde hoger is dan 2000, zet waarde op naar binair en spreek vervolgens setNummer methode aan
+            if (PulseLength > 2000)
+            {
+                setNummer(setBinair());
+//print de waarde uit die via de afstandsbediening is doorgegeven
+                System.out.println(setNummer(setBinair()));
+            }
+            BoeBot.wait(10);
+        }
+    }
+
+
+    public static String setBinair() {
+        StringBuffer sb = new StringBuffer();
+        String binair;
+        int lengtes[] = new int[12];
+//als de waarde niet lager is dan 0, geef dan -1 terug
+        if (BoeBot.pulseIn(14, false, 20000) < 0) {
+            return "-1";
+        }
+//anders zet elke ingevelezen waarde om naar binair
+        else {
+            for (int i = 0; i < 12; i++)
+                if (BoeBot.pulseIn(14, false, 20000) > 1000) {
+                    lengtes[i] = 1;
+                } else {
+                    lengtes[i] = 0;
+                }
+//zet alle binaire waardes achter elkaar om een 'binair'string te krijgen
+            for (int i = 0; i < 12; i++)
+                sb.append(lengtes[i]);
+                binair = sb.toString();
+//geef de meetwaarde terug als binaire code
+            return binair;
+        }
+    }
+
+//geef de waarde terug waarvan de binaire code overeen komt en spreek de daarbij horende methode aan
+    public static String setNummer(String binair) {
+        switch (binair) {
+            case "000000010000":
+                draaienDiagonaal(50, "links");
+                return "1";
+            case "100000010000":
+                gaNaarSnelheid(200);
+                return "2";
+            case "010000010000":
+                draaienDiagonaal(-50, "rechts");
+                return "3";
+            case "110000010000":
+                draaien(-50);
+                return "4";
+            case "001000010000":
+                noodRem();
+                return "5";
+            case "101000010000":
+                noodRem();
+                draaien( 50);
+                return "6";
+            case "011000010000":
+                draaienDiagonaal(-50, "links");
+                return "7";
+            case "111000010000":
+                gaNaarSnelheid(-200);
+                return "8";
+            case "000100010000":
+                draaienDiagonaal(50, "rechts");
+                return "9";
+        }
+//als een binaire waarde niet gelijk is aan een hierboven, geef dan -1 terug
+        return "-1";
+    }
+
+//laat de boebot direct stoppen
+    public static void noodRem(){
+        s1.update(1500);     //Snelheid vasthouden na for-loop
+        s2.update(1500);     //snelheid vasthouden na for-loop
+    }
+
+
+    public static void gaNaarSnelheid(int snelheid){
+        int t;
+        int links = 0;
+        int rechts = 0;
+
+        if (snelheid > 0){
+            for(t = 0; t < snelheid; t++) {
+                links = 1500 + t;
+                rechts = 1500 - t;
+                s1.update(links);        //Snelheid opbouwen op basis van de teller in de for-loop
+                s2.update(rechts);        //Snelheid opbouwen op basis van de teller in de for-loop
+
+                BoeBot.wait(5);             //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+            }
+        }
+
+        else {
+            for(t = 0; t > snelheid; t--) {
+                links = 1500 + t;
+                rechts = 1500 - t;
+                s1.update(links);        //Snelheid opbouwen op basis van de teller in de for-loop
+                s2.update(rechts);        //Snelheid opbouwen op basis van de teller in de for-loop
+
+                BoeBot.wait(5);             //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+            }
+        }
+        s1.update(links);     //Snelheid vasthouden na for-loop
+        s2.update(rechts);     //snelheid vasthouden na for-loop
+
+    }
+
+//methode om de boebot een flauwe bocht te laten draaien
+    public static void draaienDiagonaal(int draaiSnelheid, String richting){
+//als draaisnelheid hoger dan 0 is
+        if (draaiSnelheid > 0) {
+//als richting rechts is, draai dan flauw naar rechtsvoor
+            if (richting.equals("rechts")) {
+                s1.update(1400);
+                s2.update(1500 + draaiSnelheid);
+//als richting links is, draai dan flauw naar linksvoor
+            } else if (richting.equals("links")) {
+                s1.update(1500 + draaiSnelheid);
+                s2.update(1400);
+                }
+            }
+        else {
+//als richting rechts is, draai dan flauw naar rechtsachter
+            if (richting.equals("rechts")) {
+                s1.update(1600);
+                s2.update(1500 + draaiSnelheid);
+            } else if (richting.equals("links")) {
+//als richting links is, draai dan flauw naar linksachter
+                s1.update(1500 + draaiSnelheid);
+                s2.update(1600);
+                }
+            }
+        }
+
+//methode die de boeboet om eigen as laat draaien
+    public static void draaien(int draaiSnelheid){
+        s1.update(1500 + draaiSnelheid);
+        s2.update(1500 + draaiSnelheid);
+        }
+    }
