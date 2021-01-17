@@ -1,0 +1,42 @@
+//Week 2, Opdracht 7
+//Opdracht A:
+
+import TI.BoeBot;
+import TI.PWM;
+import TI.Servo;
+import TI.Timer;
+
+public class RobotMain {
+
+
+    public static void main(String[] args) {
+
+        while (true) {
+            BoeBot.freqOut(0, 1000, 100);        //Op pin 0, toonhoogte 1000 hz voor 100ms
+            BoeBot.wait(1000);                   //1000ms wachten
+        }
+    }
+}
+
+//Opdracht B:
+import TI.BoeBot;
+        import TI.PWM;
+        import TI.Servo;
+        import TI.Timer;
+
+public class RobotMain {
+
+
+    public static void main(String[] args) {
+
+        while (true) {
+
+            for(int t = 1000; t < 2000; t++) {          //For loop optellen naar 2000 vanaf 1000hz
+                BoeBot.freqOut(0, t, 1);        //Op pin 0 de waarde van t instellen voor 1ms
+                BoeBot.wait(2000 / 1000);             //Wachttijd instellen, (+1000HZ binnen 2 seconden)
+            }
+                BoeBot.wait(1000);                  //1sec wachten
+
+        }
+    }
+}

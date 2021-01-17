@@ -1,0 +1,45 @@
+//Week 2, Opdracht 6
+//Deze opdracht gebruikt de methoden van opdracht 5
+//Hieronder de variabelen die nodig zijn om elke opdracht af te ronden
+
+//Opdracht A:
+public class RobotMain {
+    static Servo s1 = new Servo(12);
+    static Servo s2 = new Servo(13);
+    static int draaiBereken;
+
+    public static void main(String[] args) {
+
+        while (true) {
+            draaiGraden(90, 100);
+            gaNaarSnelheid(200);
+        }
+    }
+
+//Opdracht B:
+public class RobotMain {
+    static Servo s1 = new Servo(12);
+    static Servo s2 = new Servo(13);
+    static int draaiBereken;
+
+    public static void main(String[] args) {
+
+        while (true) {
+            draaiGraden(120, 100);
+            gaNaarSnelheid(200);
+        }
+    }
+
+//Opdracht C:
+public class RobotMain {
+    static Servo s1 = new Servo(12);
+    static Servo s2 = new Servo(13);
+    static int draaiBereken;
+
+    public static void main(String[] args) {
+
+        while (true) {
+            draaiGraden(360, 100);
+        }
+    }
+

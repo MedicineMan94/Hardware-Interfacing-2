@@ -1,0 +1,94 @@
+//Week 2, Opdracht 5
+//Opdracht A
+
+import TI.BoeBot;
+        import TI.PWM;
+        import TI.Servo;
+        import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args) {
+
+        gaNaarSnelheid(200);                //methode aanspreken
+    }
+    public static void gaNaarSnelheid(int snelheid){
+        int t;
+        if (snelheid >= 0){
+        for(t = 0; t < snelheid; t++) {
+            s1.update(1500 - t);        //Snelheid opbouwen op basis van de teller in de for-loop
+            s2.update(1500 + t);        //Snelheid opbouwen op basis van de teller in de for-loop
+
+            BoeBot.wait(20);             //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+            }
+        }
+
+        else {
+        for(t = 0; t > snelheid; t--) {
+            s1.update(1500 - t);        //Snelheid opbouwen op basis van de teller in de for-loop
+            s2.update(1500 + t);        //Snelheid opbouwen op basis van de teller in de for-loop
+
+            BoeBot.wait(20);             //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+            }
+        }
+        s1.update(1500 - snelheid);     //Snelheid vasthouden na for-loop
+        s2.update(1500 + snelheid);     //snelheid vasthouden na for-lo0p
+
+        }
+}
+
+//Opdracht B
+
+    public static void noodRem(){
+        s1.update(1500);     //Wielen laten stoppen
+        s2.update(1500);     //Wielen laten stoppen
+    }
+
+//Opdracht C
+
+    public static void draaien(int draaiSnelheid){
+//als de draaisnelheid hoger is dan 0, laat de wielen 'vooruit' met de ingevulde snelheid rijden
+        if (draaiSnelheid > 0){
+            s1.update(1500 - draaiSnelheid);
+            s2.update(1500 - draaiSnelheid);
+        }
+//als de draaisnelheid lager is dan 0, laat de wielen 'achteruit' met de ingevulde snelheid rijden
+        else if (draaiSnelheid < 0){
+            s1.update(1500 + draaiSnelheid);
+            s2.update(1500 + draaiSnelheid);
+        }
+    }
+
+
+//Opdracht D
+
+    public static void draaiGraden(int graden, int draaiSnelheid) {
+        // kijken of het getal groter is dan 0
+        if (draaiSnelheid > 0) {
+            // Tijd om te draaien bereken
+            int tijdpergraad = 500 / draaiSnelheid;
+
+            // Boebot laten draaien
+            s1.update(1500 + draaiSnelheid);
+            s2.update(1500 + draaiSnelheid);
+            // Boebot de berekende tijd laten wachten
+            BoeBot.wait(tijdpergraad * graden);
+
+            // Boebot stoppen
+            noodRem();
+        } else if (draaiSnelheid < 0) {
+            // Negatieve snelheid omdraaien naar positieve snelheid
+            draaiSnelheid = Math.abs(draaiSnelheid);
+
+            // Tijd om te draaien bereken
+            int tijdpergraad = 500 / draaiSnelheid;
+
+            // Boebot laten draaien
+            s1.update(1500 - draaiSnelheid);
+            s2.update(1500 - draaiSnelheid);
+            // Boebot de berekende tijd laten wachten
+            BoeBot.wait(tijdpergraad * graden);
+
+            // Boebot stoppen
+            noodRem();
+        }
+    }

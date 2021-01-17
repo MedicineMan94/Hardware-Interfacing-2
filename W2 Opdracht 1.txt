@@ -1,0 +1,62 @@
+// Week 2, Opdracht 1
+// Opdracht A:
+
+import TI.BoeBot;
+        import TI.PWM;
+        import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+        PWM pwm = new PWM (1, 255);           //PWM aanmaken met beginwaarden
+        pwm.start();                           // Start de PWM
+
+        while (true){
+            pwm.update(128);                    //Waarde zetten op de PWM
+            BoeBot.wait(100);                   // Vertragin instellen
+
+        }
+    }
+}
+
+// Opdracht B:
+
+import TI.BoeBot;
+        import TI.PWM;
+        import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+        PWM pwm = new PWM (1, 255);           //PWM aanmaken met beginwaarden
+        pwm.start();                                // Start de PWM
+
+        while (true){
+            pwm.update(2);                       //Waarde zetten op de PWM
+            BoeBot.wait(100);                   // Vertragin instellen
+
+        }
+    }
+}
+
+// Opdracht C:
+
+import TI.BoeBot;
+        import TI.PWM;
+        import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+        PWM pwm = new PWM (1, 255);           //PWM aanmaken met beginwaarden
+        pwm.start();                                // Start de PWM
+
+        while (true){
+
+            for(int t = 0; t < 255; t++) {
+                pwm.update(t);                       //Waarde zetten op de PWM
+                BoeBot.wait(2000/255);             //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+            }
+        }
+    }
+}

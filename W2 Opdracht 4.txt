@@ -1,0 +1,22 @@
+//Week 2, Opdracht 4
+
+import TI.BoeBot;
+import TI.PWM;
+import TI.Servo;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+    Servo s1 = new Servo(12);               //Servo1 declareren
+    Servo s2 = new Servo (13);              // servo 2 declareren
+
+    s1.update(1700);                        //draaisnelheid declareren
+    s2.update(1300);                        //draaisnelheid declareren
+
+        while (true){
+
+                BoeBot.wait(1000);          //vertragin instellen
+            }
+        }
+    }

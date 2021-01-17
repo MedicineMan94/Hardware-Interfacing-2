@@ -1,0 +1,41 @@
+//Week 2, opdracht 2
+
+import TI.BoeBot;
+import TI.PWM;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args)
+    {
+        PWM pwm1 = new PWM (1, 0);           //PWM aanmaken met beginwaarden
+        PWM pwm2 = new PWM (4, 255);           //PWM aanmaken met beginwaarden
+
+        pwm1.start();                                // Start de PWM
+        pwm2.start();                                // Start de PWM
+
+        int led1 = 0;                               //startwaarde van LED zetten
+        int led2 = 255;                             //Startwaarde van Led zetten
+
+        while (true){
+
+
+            for(int t = 0; t < 255; t++) {          //For loop optellen naar 255
+                led1++;                             // waarde led1 + 1
+                led2--;                             // waarde led2 -1
+
+                pwm1.update(led1);                    // waarde zetten op PWM
+                pwm2.update(led2);                      //Waarde zetten op de PWM
+                BoeBot.wait(2000/255);             //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+            }
+
+            for(int t = 255; t > 0; t--) {             //Forloop aftrekken van 255
+                led1--;                                 // Waarde led 1 -1
+                led2++;                                 // Waarde led 2 + 1
+
+                pwm1.update(led1);                       //Waarde zetten op de PWM
+                pwm2.update(led2);                       //Waarde zetten op de PWM
+                BoeBot.wait(2000/255);             //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+            }
+        }
+    }
+}
